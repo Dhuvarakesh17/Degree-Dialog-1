@@ -23,7 +23,7 @@ const ChatBox = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/chat/", {
+      const response = await fetch("https://degree-dialog-1-1.onrender.com/api/chat/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
@@ -48,11 +48,11 @@ const ChatBox = () => {
   };
 
   return (
-    <div className="chatbox-container"  >
+    <div className="chatbox-container">
       <div className="chatbox-header">
         <h2 className="mt-4">Degree Dialog Chatbot</h2>
       </div>
-      <div className="chatbox-messages ">
+      <div className="chatbox-messages">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -64,9 +64,7 @@ const ChatBox = () => {
             </div>
           </div>
         ))}
-        {loading && (
-          <div className="typing-indicator">Bot is typing...</div>
-        )}
+        {loading && <div className="typing-indicator">Bot is typing...</div>}
         <div ref={messagesEndRef} />
       </div>
       <div className="chatbox-input">
