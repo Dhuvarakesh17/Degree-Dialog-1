@@ -1,0 +1,114 @@
+
+.chatbox-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #4a078d40;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .chatbox-header {
+    padding: 16px;
+    background-color: #1e3d59;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .chatbox-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    background-color: #f9fafb;
+  }
+  
+  .message {
+    margin-bottom: 12px;
+    max-width: 70%;
+  }
+  
+  .message.user {
+    margin-left: auto;
+    text-align: right;
+  }
+  
+  .message.bot {
+    margin-right: auto;
+    text-align: left;
+  }
+  
+  .message-content {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .message.user .message-content {
+    background-color: #2563eb;
+    color: #ffffff;
+  }
+  
+  .message.bot .message-content {
+    background-color: #e5e7eb;
+    color: #1f2937;
+  }
+  
+  .message-timestamp {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+  
+  .typing-indicator {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-style: italic;
+    text-align: center;
+    margin-top: 8px;
+  }
+  
+  .chatbox-input {
+    display: flex;
+    padding: 16px;
+    border-top: 1px solid #e5e7eb;
+    background-color: #ffffff;
+  }
+  
+  .chatbox-input input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-right: 8px;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  
+  .chatbox-input input:focus {
+    border-color: #2563eb;
+  }
+  
+  .chatbox-input button {
+    padding: 12px 20px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .chatbox-input button:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .chatbox-input button:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+  }
