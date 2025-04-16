@@ -18,7 +18,7 @@ const ChatBox = () => {
     if (!input.trim()) return;
 
     const userMessage = { role: "user", content: input, timestamp: new Date() };
-    setMessages([...messages, userMessage]);
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInput("");
     setLoading(true);
 
@@ -34,13 +34,16 @@ const ChatBox = () => {
       }
 
       const data = await response.json();
+      if (!data.response) {
+        throw new Error("Empty response from the server");
+      }
       const botMessage = { role: "bot", content: data.response, timestamp: new Date() };
-      setMessages((prev) => [...prev, botMessage]);
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
       console.error("Error fetching response:", error);
-      setMessages((prev) => [
-        ...prev,
-        { role: "bot", content: "Sorry, something went wrong. Please try again.", timestamp: new Date() },
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { role: "bot", content: "Sorry, something went wrong. Please try again later.", timestamp: new Date() },
       ]);
     } finally {
       setLoading(false);
@@ -54,10 +57,7 @@ const ChatBox = () => {
       </div>
       <div className="chatbox-messages">
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`message ${msg.role === "user" ? "user" : "bot"}`}
-          >
+          <div key={index} className={`message ${msg.role === "user" ? "user" : "bot"}`}>
             <div className="message-content">{msg.content}</div>
             <div className="message-timestamp">
               {new Date(msg.timestamp).toLocaleTimeString()}
@@ -75,6 +75,7 @@ const ChatBox = () => {
           onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           placeholder="Type a message..."
           aria-label="Type your message"
+          disabled={loading}
         />
         <button onClick={sendMessage} disabled={loading}>
           Send
