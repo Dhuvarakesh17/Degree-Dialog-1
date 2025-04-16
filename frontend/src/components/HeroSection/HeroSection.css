@@ -30,3 +30,15 @@
   .cta-button:hover {
     background-color: #1d4ed8;
   }
+  .lusitana-regular {
+    font-family: "Lusitana", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .lusitana-bold {
+    font-family: "Lusitana", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  

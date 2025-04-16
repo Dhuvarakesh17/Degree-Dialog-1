@@ -3,3 +3,15 @@
     flex-direction: column;
     height: 100vh;
   }
+  .lusitana-regular {
+    font-family: "Lusitana", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .lusitana-bold {
+    font-family: "Lusitana", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
