@@ -6,7 +6,7 @@ import os
 from fuzzywuzzy import fuzz
 
 # Load API key
-API_KEY = os.getenv("GOOGLE_API_KEY")
+API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=API_KEY)
 
 # List of college-related keywords
