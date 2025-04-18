@@ -22,5 +22,3 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/chat/', chatbot_view, name='chatbot_api'),  # API endpoint for chat
 ]
-
-
