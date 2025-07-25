@@ -8,6 +8,10 @@ fetch(`${API_BASE_URL}api/endpoint`)
 
 
 
-const API_BASE_URL = "https://your-backend.onrender.com/"; // Backend URL
+/**
+ * The base URL for the backend API.
+ * @type {string}
+ */
+const API_BASE_URL = "https://degree-dialog-1-1.onrender.com"; // Backend URL
 
 export default API_BASE_URL;

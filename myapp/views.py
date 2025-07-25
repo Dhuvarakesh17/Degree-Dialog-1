@@ -9,6 +9,8 @@ from fuzzywuzzy import fuzz
 API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=API_KEY)
 
+
+
 # System instruction to make Gemini act as a college advisor
 COLLEGE_ADVISOR_PROMPT = """
 You are an AI College Advisor assistant. Your role is to provide helpful, accurate information 
@@ -40,7 +42,7 @@ def chatbot_view(request):
 
         try:
             # Initialize the Gemini model with the college advisor persona
-            model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
+            model = genai.GenerativeModel("models/gemini-2.0-flash")
             
             # Start a chat session with the system instruction
             chat = model.start_chat()
