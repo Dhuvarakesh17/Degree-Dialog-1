@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lusitana:wght@400;700&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap'); 
 @import "tailwindcss";
 
 * {
@@ -15,21 +15,20 @@
 body {
   background-color: #f4f4f4;
 }
-.lusitana-regular {
-  font-family: "Lusitana", serif;
-  font-weight: 400;
-  font-style: normal;
-}
 
-.lusitana-bold {
-  font-family: "Lusitana", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.urbanist-regular {
-  font-family: "Urbanist", sans-serif;
+.bricolage-grotesque-regular {
+  font-family: "Bricolage Grotesque", sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+.bricolage-grotesque-bold {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }

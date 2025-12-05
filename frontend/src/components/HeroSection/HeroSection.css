@@ -30,15 +30,22 @@
   .cta-button:hover {
     background-color: #1d4ed8;
   }
-  .lusitana-regular {
-    font-family: "Lusitana", serif;
-    font-weight: 400;
-    font-style: normal;
-  }
   
-  .lusitana-bold {
-    font-family: "Lusitana", serif;
-    font-weight: 700;
-    font-style: normal;
-  }
+  .bricolage-grotesque-regular {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+.bricolage-grotesque-bold {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
   
