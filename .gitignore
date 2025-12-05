@@ -9,6 +9,7 @@ lerna-debug.log*
 
 myproject/frontend/node_modules
 myproject/frontend/dist
+frontend/node_modules
 dist-ssr
 *.local
 
@@ -29,7 +30,7 @@ dist-ssr
 **/node_modules/
 
 # Environment files
-**/.env
+.env
 
 # Distribution folders
 **/dist/
