@@ -67,7 +67,7 @@ chats_collection = mongo_db["chats"]
 
 
 # Root API endpoint
-@api_view(['GET'])
+@api_view(['GET', 'HEAD'])
 @permission_classes([AllowAny])
 def root_view(request):
     """Root API endpoint - provides API status"""
