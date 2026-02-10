@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
+from django.http import JsonResponse
 import os
 import pymongo
 import jwt
@@ -63,6 +64,31 @@ except Exception as e:
 mongo_db = mongo_client[MONGO_DB_NAME]
 users_collection = mongo_db["users"]
 chats_collection = mongo_db["chats"]
+
+
+# Root API endpoint
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def root_view(request):
+    """Root API endpoint - provides API status"""
+    return Response({
+        "message": "Degree Dialog API",
+        "status": "running",
+        "endpoints": {
+            "auth": {
+                "register": "POST /api/auth/register/",
+                "login": "POST /api/auth/login/",
+                "profile": "GET /api/auth/profile/",
+            },
+            "chat": {
+                "message": "POST /api/chat/",
+                "history": "GET /api/chat/history/",
+                "clear": "DELETE /api/chat/clear/",
+            }
+        },
+        "mongodb": "connected" if mongo_client else "disconnected",
+        "cohere": "configured" if COHERE_API_KEY else "not configured"
+    }, status=status.HTTP_200_OK)
 
 
 def _handle_mongo_error(error_msg="Database connection failed"):
