@@ -17,49 +17,35 @@ import cohere
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 cohere_client = cohere.Client(COHERE_API_KEY)
 
-# MongoDB setup
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/degreedialog")
+# MongoDB setup - MUST have MONGO_URI set, no localhost fallback
+MONGO_URI = os.getenv("MONGO_URI")
 MONGO_DB_NAME = os.getenv("MONGO_DB_NAME", "degreedialog")
 
-# Debug: Log environment variable status (without exposing full URI)
-print(f"MONGO_URI set: {bool(os.getenv('MONGO_URI'))}")
-print(f"MONGO_URI starts with: {MONGO_URI[:20]}..." if MONGO_URI else "MONGO_URI is None")
+# Validate configuration
+if not MONGO_URI:
+    raise ValueError("MONGO_URI environment variable is required! Set it on your deployment platform.")
+
+# Debug: Log environment variable status
+print(f"MONGO_URI set: {bool(MONGO_URI)}")
+print(f"MONGO_URI starts with: {MONGO_URI[:30]}..." if MONGO_URI else "MONGO_URI is None")
 print(f"MONGO_DB_NAME: {MONGO_DB_NAME}")
 print(f"COHERE_API_KEY set: {bool(os.getenv('COHERE_API_KEY'))}")
 
-# Add SSL/TLS options for MongoDB Atlas
+# MongoDB connection
 mongo_client = None
 try:
     print(f"Attempting MongoDB connection to: {MONGO_URI[:30]}...")
     mongo_client = pymongo.MongoClient(
         MONGO_URI,
-        serverSelectionTimeoutMS=5000,
-        connectTimeoutMS=10000,
+        serverSelectionTimeoutMS=10000,
+        connectTimeoutMS=15000,
     )
     # Test connection
     mongo_client.admin.command('ping')
     print("✓ MongoDB connected successfully")
 except Exception as e:
-    print(f"✗ MongoDB connection warning: {e}")
-    # Try with SSL verification disabled (temporary workaround)
-    try:
-        mongo_client = pymongo.MongoClient(
-            MONGO_URI,
-            serverSelectionTimeoutMS=5000,
-            connectTimeoutMS=10000,
-            ssl=True,
-            tlsInsecure=True,
-        )
-        mongo_client.admin.command('ping')
-        print("✓ MongoDB connected with tlsInsecure")
-    except Exception as e2:
-        print(f"✗ MongoDB fallback connection error: {e2}")
-        # Create a dummy client to prevent NameError, but it won't work
-        mongo_client = pymongo.MongoClient(
-            "mongodb://localhost:27017/",
-            serverSelectionTimeoutMS=1000,
-        )
-        print("⚠ Using dummy MongoDB client - database operations will fail")
+    print(f"✗ MongoDB connection error: {e}")
+    raise Exception(f"Failed to connect to MongoDB Atlas: {e}")
 
 mongo_db = mongo_client[MONGO_DB_NAME]
 users_collection = mongo_db["users"]
