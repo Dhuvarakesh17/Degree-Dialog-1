@@ -36,4 +36,5 @@ dist-ssr
 **/dist/
 
 venv
+
 .venv

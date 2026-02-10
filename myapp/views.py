@@ -21,6 +21,7 @@ MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/degreedialog")
 MONGO_DB_NAME = os.getenv("MONGO_DB_NAME", "degreedialog")
 
 # Add SSL/TLS options for MongoDB Atlas
+mongo_client = None
 try:
     mongo_client = pymongo.MongoClient(
         MONGO_URI,
@@ -29,6 +30,7 @@ try:
     )
     # Test connection
     mongo_client.admin.command('ping')
+    print("MongoDB connected successfully")
 except Exception as e:
     print(f"MongoDB connection warning: {e}")
     # Try with SSL verification disabled (temporary workaround)
@@ -40,8 +42,14 @@ except Exception as e:
             ssl=True,
             tlsInsecure=True,
         )
+        print("MongoDB connected with tlsInsecure")
     except Exception as e2:
         print(f"MongoDB fallback connection error: {e2}")
+        # Create a dummy client to prevent NameError, but it won't work
+        mongo_client = pymongo.MongoClient(
+            "mongodb://localhost:27017/",
+            serverSelectionTimeoutMS=1000,
+        )
 
 mongo_db = mongo_client[MONGO_DB_NAME]
 users_collection = mongo_db["users"]
