@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-9a+03g4i@+ydfhyb(&-+=5&zdm-tf8@2am4%#)=&6a*55(cch-'
 
-DEBUG = False  # Turn OFF for production
+DEBUG = True  # Turn OFF for production
 
 ALLOWED_HOSTS = [
     "degree-dialog-1-1.onrender.com",
@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'myapp',
     'corsheaders',
 ]
@@ -71,7 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
-# Database
+# Database - SQLite for Django internals
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -107,6 +108,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Load API key from .env
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-if not GEMINI_API_KEY:
-    raise ValueError("Missing GEMINI_API_KEY in environment variables")
+COHERE_API_KEY = os.getenv("COHERE_API_KEY")
+if not COHERE_API_KEY:
+    raise ValueError("Missing COHERE_API_KEY in environment variables")
+
+# REST Framework Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}

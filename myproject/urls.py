@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from myapp.views import chatbot_view  # Import your chatbot view
+from myapp.views import chatbot_view, register_view, login_view, user_profile_view, chatbot_history_view, chatbot_clear_history_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/chat/', chatbot_view, name='chatbot_api'),  # API endpoint for chat
+    path('api/chat/', chatbot_view, name='chatbot_api'),
+    path('api/chat/history/', chatbot_history_view, name='chatbot_history'),
+    path('api/chat/clear/', chatbot_clear_history_view, name='chatbot_clear'),
+    path('api/auth/register/', register_view, name='register'),
+    path('api/auth/login/', login_view, name='login'),
+    path('api/auth/profile/', user_profile_view, name='profile'),
 ]

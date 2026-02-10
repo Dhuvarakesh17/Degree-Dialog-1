@@ -1,23 +1,43 @@
 .chat-page {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  .bricolage-grotesque-regular {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(59, 130, 246, 0.05) 0%,
+      rgba(147, 51, 234, 0.05) 100%
+    ),
+    url("https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=1080&fit=crop&q=80");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.chat-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.bricolage-grotesque-regular {
   font-family: "Bricolage Grotesque", sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+  font-variation-settings: "wdth" 100;
 }
 .bricolage-grotesque-bold {
   font-family: "Bricolage Grotesque", sans-serif;
   font-optical-sizing: auto;
   font-weight: 800;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+  font-variation-settings: "wdth" 100;
 }
 
-  
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .chat-container {
+    flex-direction: column;
+  }
+}

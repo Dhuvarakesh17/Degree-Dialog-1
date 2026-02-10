@@ -34,3 +34,6 @@ dist-ssr
 
 # Distribution folders
 **/dist/
+
+venv
+.venv

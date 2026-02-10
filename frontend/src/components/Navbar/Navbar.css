@@ -1,47 +1,127 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #2563eb;
-    color: white;
-  }
-  
-  .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .navbar-links {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .navbar-link {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-  }
-  
-  .navbar-link:hover {
-    text-decoration: underline;
-  }
-  
-  .bricolage-grotesque-regular {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f1f1f1;
+  color: #1f2937;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-brand:hover {
+  opacity: 0.9;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.navbar-link {
+  color: #1f2937;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.navbar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-auth {
+  font-weight: 500;
+}
+
+.navbar-signup {
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+.navbar-signup:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-user {
+  color: #1f2937;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.navbar-logout {
+  background: rgba(255, 255, 255, 0.2);
+  color: #1f2937;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navbar-logout:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-logout:active {
+  transform: scale(0.95);
+}
+
+.bricolage-grotesque-regular {
   font-family: "Bricolage Grotesque", sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+  font-variation-settings: "wdth" 100;
 }
 .bricolage-grotesque-bold {
   font-family: "Bricolage Grotesque", sans-serif;
   font-optical-sizing: auto;
   font-weight: 800;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+  font-variation-settings: "wdth" 100;
 }
 
-  
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+
+  .navbar-links {
+    gap: 0.75rem;
+  }
+
+  .navbar-link {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .navbar-user {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .navbar-logout {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+}
