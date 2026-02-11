@@ -154,6 +154,50 @@
   text-decoration: underline;
 }
 
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  padding-right: 44px;
+  width: 100%;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #64748b;
+  border-radius: 6px;
+}
+
+.password-toggle-btn:hover:not(:disabled) {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.password-toggle-btn:active:not(:disabled) {
+  background: rgba(102, 126, 234, 0.2);
+}
+
+.password-toggle-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.password-toggle-btn svg {
+  stroke: currentColor;
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
   .auth-container {
