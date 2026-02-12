@@ -2,7 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import API_BASE_URL from "../../config";
 import "./ChatBox.css";
 
-const ChatBox = ({ sessionId, onSessionCreated }) => {
+const ChatBox = ({
+  sessionId,
+  onSessionCreated,
+  onToggleSidebar,
+  isSidebarOpen,
+}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -12,6 +17,12 @@ const ChatBox = ({ sessionId, onSessionCreated }) => {
 
   // Fetch chat history or specific session
   useEffect(() => {
+    if (!sessionId) {
+      setMessages([]);
+      setLoadingHistory(false);
+      return;
+    }
+
     const fetchChatHistory = async () => {
       try {
         setLoadingHistory(true);
@@ -30,35 +41,18 @@ const ChatBox = ({ sessionId, onSessionCreated }) => {
           const data = await response.json();
           const allMessages = [];
 
-          // If sessionId is provided, load only that session
-          if (sessionId) {
-            const selectedChat = data.chats?.find(
-              (chat) => chat._id === sessionId,
-            );
-            if (selectedChat && selectedChat.messages) {
-              selectedChat.messages.forEach((msg) => {
-                allMessages.push({
-                  role: msg.role,
-                  content: msg.content,
-                  timestamp: new Date(msg.timestamp),
-                });
+          // Load only the selected session
+          const selectedChat = data.chats?.find(
+            (chat) => chat._id === sessionId,
+          );
+          if (selectedChat && selectedChat.messages) {
+            selectedChat.messages.forEach((msg) => {
+              allMessages.push({
+                role: msg.role,
+                content: msg.content,
+                timestamp: new Date(msg.timestamp),
               });
-            }
-          } else {
-            // Load all messages (for showing all chats)
-            if (data.chats && Array.isArray(data.chats)) {
-              data.chats.forEach((chatEntry) => {
-                if (chatEntry.messages && Array.isArray(chatEntry.messages)) {
-                  chatEntry.messages.forEach((msg) => {
-                    allMessages.push({
-                      role: msg.role,
-                      content: msg.content,
-                      timestamp: new Date(msg.timestamp),
-                    });
-                  });
-                }
-              });
-            }
+            });
           }
 
           // Sort messages by timestamp (oldest first)
@@ -103,7 +97,7 @@ const ChatBox = ({ sessionId, onSessionCreated }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ message: messageText }),
+        body: JSON.stringify({ message: messageText, session_id: sessionId }),
       });
 
       if (!response.ok) {
@@ -129,8 +123,8 @@ const ChatBox = ({ sessionId, onSessionCreated }) => {
       inputRef.current?.focus();
 
       // Notify parent that a new session was created
-      if (onSessionCreated) {
-        onSessionCreated();
+      if (!sessionId && data.session_id && onSessionCreated) {
+        onSessionCreated(data.session_id);
       }
     } catch (error) {
       console.error("Error fetching response:", error);
@@ -156,6 +150,26 @@ const ChatBox = ({ sessionId, onSessionCreated }) => {
     <div className="chatbox-container">
       <div className="chatbox-header">
         <div className="header-content">
+          <button
+            className="sidebar-toggle"
+            type="button"
+            onClick={onToggleSidebar}
+            aria-label="Toggle chat history"
+            aria-expanded={isSidebarOpen}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
           <div className="header-icon">🎓</div>
           <div className="header-text">
             <h2>Degree Dialog</h2>
@@ -165,9 +179,12 @@ const ChatBox = ({ sessionId, onSessionCreated }) => {
       </div>
       <div className="chatbox-messages">
         {loadingHistory ? (
-          <div className="empty-state">
-            <div className="empty-icon">⏳</div>
-            <h3>Loading your chats...</h3>
+          <div className="skeleton-stack" aria-hidden="true">
+            <div className="skeleton-bubble skeleton-left"></div>
+            <div className="skeleton-bubble skeleton-right"></div>
+            <div className="skeleton-bubble skeleton-left"></div>
+            <div className="skeleton-bubble skeleton-right"></div>
+            <div className="skeleton-bubble skeleton-left"></div>
           </div>
         ) : messages.length === 0 ? (
           <div className="empty-state">

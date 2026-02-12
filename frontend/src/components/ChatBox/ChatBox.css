@@ -24,6 +24,25 @@
   gap: 16px;
 }
 
+.sidebar-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  background: rgba(37, 99, 235, 0.08);
+  color: #1d4ed8;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: rgba(37, 99, 235, 0.35);
+}
+
 .header-icon {
   font-size: 2rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
@@ -93,6 +112,44 @@
   backdrop-filter: blur(10px);
   border-radius: 16px;
   margin: 20px;
+}
+
+.skeleton-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skeleton-bubble {
+  height: 44px;
+  border-radius: 16px;
+  background: linear-gradient(
+    90deg,
+    rgba(226, 232, 240, 0.6) 25%,
+    rgba(241, 245, 249, 0.9) 50%,
+    rgba(226, 232, 240, 0.6) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+.skeleton-left {
+  width: 55%;
+  align-self: flex-start;
+}
+
+.skeleton-right {
+  width: 45%;
+  align-self: flex-end;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .empty-icon {
@@ -352,6 +409,10 @@
 
   .header-content {
     gap: 12px;
+  }
+
+  .sidebar-toggle {
+    display: inline-flex;
   }
 
   .header-icon {

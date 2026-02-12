@@ -12,6 +12,8 @@ import pymongo
 import jwt
 from datetime import datetime, timedelta
 import cohere
+from bson import ObjectId
+from bson.errors import InvalidId
 
 # Load API key
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
@@ -380,6 +382,7 @@ def chatbot_view(request):
     
     if request.method == "POST":
         user_message = request.data.get("message", "").strip()
+        session_id = request.data.get("session_id")
 
         if not user_message:
             return Response(
@@ -400,24 +403,42 @@ def chatbot_view(request):
             # Store messages in MongoDB
             try:
                 username = user_doc["_id"]
-                chat_entry = {
-                    "username": username,
-                    "messages": [
-                        {
-                            "role": "user",
-                            "content": user_message,
-                            "timestamp": datetime.utcnow()
-                        },
-                        {
-                            "role": "bot",
-                            "content": bot_reply,
-                            "timestamp": datetime.utcnow()
-                        }
-                    ],
-                    "created_at": datetime.utcnow(),
-                    "updated_at": datetime.utcnow()
+                now = datetime.utcnow()
+                user_msg = {
+                    "role": "user",
+                    "content": user_message,
+                    "timestamp": now
                 }
-                chats_collection.insert_one(chat_entry)
+                bot_msg = {
+                    "role": "bot",
+                    "content": bot_reply,
+                    "timestamp": now
+                }
+
+                if session_id:
+                    try:
+                        session_object_id = ObjectId(session_id)
+                        result = chats_collection.update_one(
+                            {"_id": session_object_id, "username": username},
+                            {
+                                "$push": {"messages": {"$each": [user_msg, bot_msg]}},
+                                "$set": {"updated_at": now}
+                            }
+                        )
+                        if result.matched_count == 0:
+                            session_id = None
+                    except InvalidId:
+                        session_id = None
+
+                if not session_id:
+                    chat_entry = {
+                        "username": username,
+                        "messages": [user_msg, bot_msg],
+                        "created_at": now,
+                        "updated_at": now
+                    }
+                    insert_result = chats_collection.insert_one(chat_entry)
+                    session_id = str(insert_result.inserted_id)
             except pymongo.errors.OperationFailure as db_err:
                 print(f"Warning: Chat not saved to database (auth error): {db_err}")
                 # Still return the response even if storage fails
@@ -425,7 +446,11 @@ def chatbot_view(request):
                 print(f"Warning: Chat not saved to database (connection error): {db_err}")
                 # Still return the response even if storage fails
 
-            return Response({"response": bot_reply})
+            response_payload = {"response": bot_reply}
+            if session_id:
+                response_payload["session_id"] = str(session_id)
+
+            return Response(response_payload)
 
         except Exception as e:
             print(f"Chatbot error: {repr(e)}")
