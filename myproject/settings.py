@@ -13,6 +13,7 @@ SECRET_KEY = 'django-insecure-9a+03g4i@+ydfhyb(&-+=5&zdm-tf8@2am4%#)=&6a*55(cch-
 DEBUG = True  # Turn OFF for production
 
 ALLOWED_HOSTS = [
+    
     "*.azurewebsites.net",
     "degree-dialog-1.onrender.com",
     "localhost",
@@ -46,6 +47,7 @@ MIDDLEWARE = [
 
 # CORS setup to allow frontend requests
 CORS_ALLOWED_ORIGINS = [
+    
     "https://degree-dialog-1.vercel.app",  # ✅ Your Vercel frontend
     "http://localhost:5173",               # Local development
     "http://127.0.0.1:5173",               # Local development alternate

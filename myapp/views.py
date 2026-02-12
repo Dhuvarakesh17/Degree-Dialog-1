@@ -159,7 +159,7 @@ def _get_user_from_token(request):
 def register_view(request):
     """User registration endpoint"""
     try:
-        if not users_collection:
+        if users_collection is None:
             return Response(
                 {'error': 'Database service unavailable. Check MongoDB Atlas connection.'},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE
@@ -270,7 +270,7 @@ def register_view(request):
 def login_view(request):
     """User login endpoint"""
     try:
-        if not users_collection:
+        if users_collection is None:
             return Response(
                 {'error': 'Database service unavailable. Check MongoDB Atlas connection.'},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE
