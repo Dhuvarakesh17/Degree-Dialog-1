@@ -46,9 +46,14 @@ MIDDLEWARE = [
 
 # CORS setup to allow frontend requests
 CORS_ALLOWED_ORIGINS = [
-    "https://*.azurewebsites.net",
     "https://degree-dialog-1.vercel.app",  # ✅ Your Vercel frontend
-    "http://localhost:5173",               # Optional: for local development
+    "http://localhost:5173",               # Local development
+    "http://127.0.0.1:5173",               # Local development alternate
+]
+
+# Allow Azure wildcard via regex
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.azurewebsites\.net$",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
