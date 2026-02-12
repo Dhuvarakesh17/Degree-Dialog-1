@@ -14,7 +14,7 @@ DEBUG = True  # Turn OFF for production
 
 ALLOWED_HOSTS = [
     "*.azurewebsites.net",
-    "degree-dialog-1-1.onrender.com",
+    "degree-dialog-1.onrender.com",
     "localhost",
     "127.0.0.1"
 ]
