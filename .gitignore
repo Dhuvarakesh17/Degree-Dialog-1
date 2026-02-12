@@ -37,4 +37,7 @@ dist-ssr
 
 venv
 
-.venv
+.venv/
+
+db.sqlite3
+
